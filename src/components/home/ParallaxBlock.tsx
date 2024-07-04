@@ -147,7 +147,7 @@ function ParallaxBlock() {
         easing="easeInQuad"
       >
         <div
-          className="font-questrial text-[56px] text-center leading-[58px] md:text-[89px] md:leading-[96px] pt-40 pb-80 md:pt-180"
+          className="font-questrial text-[56px] text-center leading-[58px] md:text-[89px] md:leading-[96px] mt-250 pb-80 md:mt-180"
           ref={parallax.ref as React.RefObject<HTMLDivElement>}
           style={{ strokeWidth: `calc(20px * var(--progress))` }}
         >

@@ -16,7 +16,7 @@ export const signUpByEmail = ({
   });
 
 export type AuthResponse = {
-  token: string;
+  access_token: string;
   email: string;
   name: string;
 };

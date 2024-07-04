@@ -1,12 +1,13 @@
 import { AuthResponse, signUpByEmail } from "@/lib/api/auth";
 import useRequest from "@/lib/hooks/useRequest";
-import { errorTextStyle, labelStyle } from "@/pages/auth";
+import { labelStyle } from "@/pages/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import clsx from "clsx";
-import { useAtom } from "jotai";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
+
+import Input from "../Input";
+import { signUpschema } from "@/lib/schema/auth";
 
 type SignUpInputs = {
   email: string;
@@ -18,21 +19,12 @@ function SignUp() {
   const [_signUpByEmail, loading, data] =
     useRequest<AuthResponse>(signUpByEmail);
 
-  const schema = yup
-    .object({
-      email: yup.string().required(),
-      name: yup.string().required(),
-      password: yup.string().required(),
-    })
-    .required();
-
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<SignUpInputs>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signUpschema),
   });
 
   const onSubmit: SubmitHandler<SignUpInputs> = (data) => {
@@ -45,32 +37,34 @@ function SignUp() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col w-full gap-y-8 mt-40 min-h-380"
     >
-      <label className={labelStyle}>Email</label>
-      <input
-        {...register("email")}
+      <Input
+        label="Email"
+        inputKey="email"
         placeholder="Enter your email"
-        className="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        labelClassName={labelStyle}
+        register={register}
+        errors={errors}
       />
-      {errors.email && (
-        <span className={errorTextStyle}>email is required</span>
-      )}
-      <label className={clsx("mt-20", labelStyle)}>User name</label>
-      <input
-        {...register("name")}
+      <Input
+        label="User name"
+        inputKey="name"
         placeholder="Enter your User name"
-        className="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        labelClassName={clsx("mt-20", labelStyle)}
+        register={register}
+        errors={errors}
       />
-      {errors.name && <span className={errorTextStyle}>Name is required</span>}
-      <label className={clsx("mt-15", labelStyle)}>Password</label>
-      <input
-        {...register("password")}
-        placeholder="Enter your password"
+      <Input
+        label="Password"
         type="password"
-        className="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputKey="password"
+        placeholder="Enter your password"
+        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        labelClassName={clsx("mt-15", labelStyle)}
+        register={register}
+        errors={errors}
       />
-      {errors.password && (
-        <span className={errorTextStyle}>Password is required</span>
-      )}
       <input
         type="submit"
         value="Sign Up"

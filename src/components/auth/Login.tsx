@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import Button from "../Button";
 import { AuthResponse, loginByEmail } from "@/lib/api/auth";
 import useRequest from "@/lib/hooks/useRequest";
 import { useAtom } from "jotai";
 import { userAtom } from "@/store";
 import { useRouter } from "next/router";
-import { errorTextStyle, labelStyle } from "@/pages/auth";
+import { labelStyle } from "@/pages/auth";
 import clsx from "clsx";
+import Input from "../Input";
+import { loginSchema } from "@/lib/schema/auth";
 
 type LoginInputs = {
   email: string;
@@ -20,20 +21,13 @@ function Login() {
   const router = useRouter();
   const [_loginByEmail, loading, response] =
     useRequest<AuthResponse>(loginByEmail);
-  const [user, setUser] = useAtom(userAtom);
+  const [_, setUser] = useAtom(userAtom);
 
   useEffect(() => {
-    if (response?.token) {
+    if (response?.access_token) {
       setUser(response);
     }
   }, [response]);
-
-  const schema = yup
-    .object({
-      email: yup.string().required(),
-      password: yup.string().required(),
-    })
-    .required();
 
   const {
     register,
@@ -41,9 +35,9 @@ function Login() {
     watch,
     formState: { errors },
   } = useForm<LoginInputs>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
-
+  console.log(watch());
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     await _loginByEmail(data);
     router.push("/");
@@ -54,26 +48,27 @@ function Login() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col w-full gap-y-8 mt-40 min-h-380"
     >
-      <label className={labelStyle}>Email</label>
-      <input
-        {...register("email")}
+      <Input
+        label="Email"
+        inputKey="email"
         placeholder="Enter your email"
-        className="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        labelClassName={labelStyle}
+        register={register}
+        errors={errors}
       />
-      {errors.email && (
-        <span className={errorTextStyle}>Email is required</span>
-      )}
 
-      <label className={clsx("mt-20", labelStyle)}>Password</label>
-      <input
-        {...register("password")}
+      <Input
+        label="Password"
         type="password"
+        inputKey="password"
         placeholder="Enter your password"
-        className="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        labelClassName={clsx("mt-15", labelStyle)}
+        register={register}
+        errors={errors}
       />
-      {errors.password && (
-        <span className={errorTextStyle}>Password is required</span>
-      )}
+
       <div className="flex justify-between items-center mt-10">
         <label className={labelStyle}>
           <input type="checkbox" className="mr-10" />
