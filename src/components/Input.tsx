@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  ValidationRule,
   UseFormReturn,
   DeepMap,
   FieldError,
@@ -9,19 +8,19 @@ import {
   RegisterOptions,
 } from "react-hook-form";
 
-interface InputProps<TFormValues extends FieldValues>
-  extends Partial<UseFormReturn<TFormValues>> {
-  inputKey: Path<TFormValues>;
+interface InputProps<TInputValues extends FieldValues>
+  extends Partial<UseFormReturn<TInputValues>> {
+  inputKey: Path<TInputValues>;
   inputClassName?: string;
   labelClassName?: string;
   label?: string;
-  rules?: RegisterOptions<TFormValues, Path<TFormValues>>;
+  rules?: RegisterOptions<TInputValues, Path<TInputValues>>;
   type?: "text" | "email" | "number" | "password";
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+  errors?: Partial<DeepMap<TInputValues, FieldError>>;
   placeholder?: string;
 }
 
-function Input<TFormValues extends FieldValues>({
+function Input<TInputValues extends FieldValues>({
   labelClassName,
   inputClassName,
   label,
@@ -29,11 +28,11 @@ function Input<TFormValues extends FieldValues>({
   errors,
   inputKey,
   ...props
-}: InputProps<TFormValues>) {
-  const { register, rules, ...inputProps } = props;
+}: InputProps<TInputValues>) {
+  const { register, rules } = props;
   const errorMessages = errors
-    ? (errors[inputKey as keyof typeof errors] as FieldError | undefined)
-    : undefined;
+    ? (errors[inputKey as keyof typeof errors] as FieldError | null)
+    : null;
   const hasError = !!(errors && errorMessages);
 
   return (
@@ -44,7 +43,6 @@ function Input<TFormValues extends FieldValues>({
           {...props}
           className={inputClassName}
           type={type}
-          {...inputProps}
           {...(register && register(inputKey, rules))}
         />
       </label>

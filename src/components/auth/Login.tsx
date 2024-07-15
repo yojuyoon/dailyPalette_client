@@ -37,7 +37,9 @@ function Login() {
   } = useForm<LoginInputs>({
     resolver: yupResolver(loginSchema),
   });
+
   console.log(watch());
+
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     await _loginByEmail(data);
     router.push("/");

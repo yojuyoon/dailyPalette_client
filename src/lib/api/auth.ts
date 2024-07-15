@@ -28,7 +28,11 @@ export const loginByEmail = ({
   email: string;
   password: string;
 }) =>
-  apiClient.post<AuthResponse>("/auth/login", {
-    email,
-    password,
-  });
+  apiClient.post<AuthResponse>(
+    "/auth/login",
+    {
+      email,
+      password,
+    },
+    { headers: { withCredentials: true } }
+  );
