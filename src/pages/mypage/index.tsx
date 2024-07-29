@@ -41,31 +41,27 @@ function MyPage() {
             onClick={() => setSelectedType("year")}
             className={cn("py-6 px-20 rounded-[4px]")}
           >
-            <>
-              <div
-                className={cn(
-                  "z-10 w-63 md:w-70",
-                  selectedType === "year" ? "text-white" : "text-darkGray"
-                )}
-              >
-                Year
-              </div>
-            </>
+            <div
+              className={cn(
+                "z-10 w-63 md:w-70",
+                selectedType === "year" ? "text-white" : "text-darkGray"
+              )}
+            >
+              Year
+            </div>
           </Button>
           <Button
             onClick={() => setSelectedType("months")}
             className={cn("py-6 px-20 rounded-[4px]")}
           >
-            <>
-              <div
-                className={cn(
-                  "z-10 w-63 md:w-70",
-                  selectedType === "months" ? "text-white" : "text-darkGray"
-                )}
-              >
-                Months
-              </div>
-            </>
+            <div
+              className={cn(
+                "z-10 w-63 md:w-70",
+                selectedType === "months" ? "text-white" : "text-darkGray"
+              )}
+            >
+              Months
+            </div>
           </Button>
           <motion.div
             layout
@@ -83,7 +79,7 @@ function MyPage() {
             {selectedType === "year" ? <YearCalendar /> : <Calendar />}
           </div>
           <Link
-            className="w-full h-55 items-center flex justify-center bg-bgPrimary border border-darkGray rounded-full"
+            className="w-full h-55 items-center flex justify-center rounded-full text-white bg-btnPrimary"
             href={"/writing"}
           >
             Start Writing
