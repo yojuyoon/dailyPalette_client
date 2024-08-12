@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import Input from "../Input";
 import { signUpschema } from "@/lib/schema/auth";
+import Button from "../Button";
 
 type SignUpInputs = {
   email: string;
@@ -41,7 +42,7 @@ function SignUp() {
         label="Email"
         inputKey="email"
         placeholder="Enter your email"
-        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-16 py-8 rounded-full border border-btnPrimary"
         labelClassName={labelStyle}
         register={register}
         errors={errors}
@@ -50,7 +51,7 @@ function SignUp() {
         label="User name"
         inputKey="name"
         placeholder="Enter your User name"
-        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-16 py-8 rounded-full border border-btnPrimary"
         labelClassName={clsx("mt-20", labelStyle)}
         register={register}
         errors={errors}
@@ -60,16 +61,17 @@ function SignUp() {
         type="password"
         inputKey="password"
         placeholder="Enter your password"
-        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-16 py-8 rounded-full border border-btnPrimary"
         labelClassName={clsx("mt-15", labelStyle)}
         register={register}
         errors={errors}
       />
-      <input
+      <Button
         type="submit"
-        value="Sign Up"
         className="bg-btnPrimary w-full h-50 rounded-full text-white mt-20"
-      />
+      >
+        Sign Up
+      </Button>
     </form>
   );
 }

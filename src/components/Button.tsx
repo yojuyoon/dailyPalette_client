@@ -1,16 +1,18 @@
 import clsx from "clsx";
 
-interface Props {
+type Props = Partial<{
+  type: "button" | "submit" | "reset" | undefined;
   onClick: (event?: React.MouseEvent<HTMLElement>) => void;
-  className?: string;
-  children?: React.ReactNode;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
-}
+  className: string;
+  children: React.ReactNode;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  onFocus: () => void;
+  onBlur: () => void;
+}>;
 
 const Button: React.FC<Props> = ({
+  type = "button",
   children,
   onClick,
   className,
@@ -21,6 +23,7 @@ const Button: React.FC<Props> = ({
 }) => {
   return (
     <button
+      type={type}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}

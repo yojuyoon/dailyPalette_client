@@ -32,13 +32,10 @@ function Login() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<LoginInputs>({
     resolver: yupResolver(loginSchema),
   });
-
-  console.log(watch());
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     await _loginByEmail(data);
@@ -54,7 +51,7 @@ function Login() {
         label="Email"
         inputKey="email"
         placeholder="Enter your email"
-        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-16 py-8 rounded-full border border-btnPrimary"
         labelClassName={labelStyle}
         register={register}
         errors={errors}
@@ -65,7 +62,7 @@ function Login() {
         type="password"
         inputKey="password"
         placeholder="Enter your password"
-        inputClassName="w-full h-54 px-10 py-8 rounded-full border border-btnPrimary"
+        inputClassName="w-full h-54 px-16 py-8 rounded-full border border-btnPrimary"
         labelClassName={clsx("mt-15", labelStyle)}
         register={register}
         errors={errors}
@@ -80,11 +77,12 @@ function Login() {
           Forgot Password?
         </Button>
       </div>
-      <input
+      <Button
         type="submit"
-        value="Login"
         className="bg-btnPrimary w-full h-50 rounded-full text-white mt-20"
-      />
+      >
+        Login
+      </Button>
     </form>
   );
 }
