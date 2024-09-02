@@ -10,7 +10,7 @@ function Nav() {
   const pathname = usePathname();
   const [user] = useAtom(userAtom);
   const colors = convertProfileToColor(user.name);
-  console.log(user);
+
   return (
     <nav className="font-questrial text-[26px] border-b border-borderBlack">
       <div className="px-8 py-10 md:px-40 flex itmes-center justify-between">

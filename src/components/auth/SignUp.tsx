@@ -29,7 +29,6 @@ function SignUp() {
   });
 
   const onSubmit: SubmitHandler<SignUpInputs> = (data) => {
-    console.log(data);
     _signUpByEmail(data);
   };
 
